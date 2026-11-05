@@ -10,6 +10,8 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with: { gradle-version: 8.7 }
       - run: unzip -o OverlayApp.zip
+      - name: Fix compile error
+        run: sed -i -e '/val L = WindowManager.LayoutParams/d' -e 's/\bL\./WindowManager.LayoutParams./g' OverlayApp/app/src/main/java/com/example/overlay/OverlayService.kt
       - run: cd OverlayApp && gradle assembleDebug
       - uses: actions/upload-artifact@v4
         with:
